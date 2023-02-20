@@ -17,5 +17,40 @@ datasource db {
 model Supermercado{
   id String @id @default(cuid())
   name String
-  
+  pesquisaIdS String
+  pesquisa Pesquisa @relation(fields: [pesquisaIdS], references: [id])
+
+}
+model Pesquisa{
+  id String @id @default(cuid())
+  mes String
+  createdAt DateTime @default(now())
+  produtos Produto[]
+  supermercado Supermercado[]
+  user User[]
+
+}
+
+model Produto{
+  id String @id @default(cuid())
+  name String
+  peso_qtd String
+  tipo_qtd String
+  preco Int
+  pesquisaIdP String
+  pesquisa Pesquisa @relation(fields: [pesquisaIdP], references: [id]) 
+}
+
+
+
+model User{
+  id String @id @default(cuid())
+  name String
+  email String @unique
+  matricula String?
+  avatarUrl String?
+  autorizacao_pesquisa Boolean @default(false)
+  tipo String
+  createdAt DateTime @default(now())
+  pesquisa Pesquisa[]
 }
