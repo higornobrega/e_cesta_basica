@@ -17,28 +17,32 @@ datasource db {
 model Supermercado{
   id String @id @default(cuid())
   name String
-  pesquisaIdS String
-  pesquisa Pesquisa @relation(fields: [pesquisaIdS], references: [id])
-
+  pesquisaIdS String?
+  pesquisa Pesquisa? @relation(fields: [pesquisaIdS], references: [id])
 }
 model Pesquisa{
   id String @id @default(cuid())
-  mes String
+  mes_ano String
   createdAt DateTime @default(now())
-  produtos Produto[]
+  PesProdIdPes String?
   supermercado Supermercado[]
   user User[]
-
+  pesprod PesProd? @relation(fields: [PesProdIdPes], references: [id]) 
 }
 
+model PesProd{
+  id String @id @default(cuid())
+  produtos Produto[]
+  pesquisa Pesquisa[]
+}
 model Produto{
   id String @id @default(cuid())
   name String
   peso_qtd String
   tipo_qtd String
   preco Int
-  pesquisaIdP String
-  pesquisa Pesquisa @relation(fields: [pesquisaIdP], references: [id]) 
+  PesProdPr String?
+  pesprod PesProd? @relation(fields: [PesProdPr], references: [id]) 
 }
 
 
@@ -52,5 +56,6 @@ model User{
   autorizacao_pesquisa Boolean @default(false)
   tipo String
   createdAt DateTime @default(now())
-  pesquisa Pesquisa[]
+  pesquisaIdU String?
+  pesquisa Pesquisa? @relation(fields: [pesquisaIdU], references: [id])
 }
