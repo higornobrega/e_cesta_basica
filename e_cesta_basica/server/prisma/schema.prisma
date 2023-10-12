@@ -30,6 +30,27 @@ model Pesquisa{
   pesprod PesProd? @relation(fields: [PesProdIdPes], references: [id]) 
 }
 
+model PesquisaGeral{
+  id String @id @default(cuid())
+  mes_ano String
+  createdAt DateTime @default(now())
+  nome_supermercado String
+  carneBovina Int?
+  leiteIntegral Int?
+  feijaoCarioca Int?
+  arrozParboilizado Int?
+  farinhaMandioca Int?
+  tomate Int?
+  pao Int?
+  cafePo Int?
+  acucar Int?
+  banana Int?
+  oleoSoja Int?
+  manteiga Int?
+
+  pesquisas PesquisaCompleta[]
+
+}
 model PesquisaCompleta{
   id String @id @default(cuid())
   mes_ano String
@@ -86,7 +107,12 @@ model PesquisaCompleta{
   manteigaTerra Int?
   manteiga Int?
   
-  user_pesquisa User[]
+// Adicione uma chave estrangeira para o usuário
+  userId String?
+  PesquisaGeral_id String?
+  // Defina a relação com o usuário
+  user User? @relation(fields: [userId], references: [id])
+  pesquisaGeral PesquisaGeral? @relation(fields: [PesquisaGeral_id], references: [id])
 }
 
 model PesProd{
@@ -110,13 +136,13 @@ model User{
   id String @id @default(cuid())
   name String
   email String @unique
+  googleId String? @unique
   matricula String?
   avatarUrl String?
   autorizacao_pesquisa Boolean @default(false)
-  tipo String
+  tipo String @default("Aluno")
   createdAt DateTime @default(now())
   pesquisaIdU String?
   pesquisa Pesquisa? @relation(fields: [pesquisaIdU], references: [id])
-  pesquisaCompIdU String?
-  pesquisaComp PesquisaCompleta? @relation(fields: [pesquisaCompIdU], references: [id])
+  pesquisaComp PesquisaCompleta[]
 }
