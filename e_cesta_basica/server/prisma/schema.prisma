@@ -33,6 +33,7 @@ model Pesquisa{
 model PesquisaGeral{
   id String @id @default(cuid())
   mes_ano String
+  ativo Boolean @default(true)
   createdAt DateTime @default(now())
   nome_supermercado String
   carneBovina Int?
@@ -53,7 +54,9 @@ model PesquisaGeral{
 }
 model PesquisaCompleta{
   id String @id @default(cuid())
+  ativo Boolean @default(true)
   mes_ano String
+  finalizado Boolean @default(false)
   createdAt DateTime @default(now())
   nome_supermercado String
   carneBovinaChaDentro Int?
@@ -135,6 +138,7 @@ model Produto{
 model User{
   id String @id @default(cuid())
   name String
+  ativo Boolean @default(true)
   email String @unique
   googleId String? @unique
   matricula String?

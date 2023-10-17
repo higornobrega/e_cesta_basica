@@ -4,110 +4,539 @@ import { z } from 'zod'
 
 export async function pesquisaRoute(fastify:FastifyInstance) {
     fastify.get('/listarPesquisasGeral', async (request, reply) => {
-        // Importe o Prisma e modele a lógica para buscar todas as pesquisas
         const pesquisas = await prisma.pesquisaGeral.findMany();
       
-        // Retorne as pesquisas como resposta
         reply.send({ pesquisas });
       });
 
     fastify.get('/listarPesquisasCompleta', async (request, reply) => {
-        // Importe o Prisma e modele a lógica para buscar todas as pesquisas
-        const pesquisas = await prisma.pesquisaCompleta.findMany();
+      const pesquisas = await prisma.pesquisaCompleta.findMany({
+        include: {
+            user:true
+          }
+        });
       
-        // Retorne as pesquisas como resposta
         reply.send({ pesquisas });
     });
-    fastify.get('/listarPesquisaCompletaMesAno/:mes_ano', async (request, reply) => {
-        const { mes_ano } = request.params;
+    fastify.get('/listarPesquisasCompletaId/:id', async (request, reply) => {
+      const params = request.params as { id: string };
+
+      const id = params.id;
+  
+      const pesquisas = await prisma.pesquisaCompleta.findMany({
+        where: {
+          id,
+        },
+        include: {
+          user:true
+        }
+      });
+      reply.send({ pesquisas });
+
+    });
+
+    fastify.get('/listarPesquisasGeralId/:id', async (request, reply) => {
+      const params = request.params as { id: string };
+
+      const id = params.id;
+  
+      const pesquisas = await prisma.pesquisaGeral.findMany({
+        where: {
+          id,
+        },
+      });
+      reply.send({ pesquisas });
+
+    });
+    fastify.get('/listarPesquisasCompletaIdAtivo/:id', async (request, reply) => {
+      const params = request.params as { id: string };
+
+      const id = params.id;
+      const ativo = true      
+      const pesquisas = await prisma.pesquisaCompleta.findMany({
+        where: {
+          id,
+          ativo,
+        },
+        include: {
+          user:true
+        }
+      });
+      reply.send({ pesquisas });
+
+    });
+
+    fastify.get('/listarPesquisasGeralIdAtivo/:id', async (request, reply) => {
+      const params = request.params as { id: string };
+      const ativo = true
+      const id = params.id;
+  
+      const pesquisas = await prisma.pesquisaGeral.findMany({
+        where: {
+          id,
+          ativo,
+        },
+      });
+      reply.send({ pesquisas });
+
+    });
+  
+    fastify.get('/listarPesquisasCompletaAtivoUserId/:userId', async (request, reply) => {
+      const params = request.params as { userId: string };
+      const ativo = true
+      const userId = params.userId;
+  
+      const pesquisas = await prisma.pesquisaCompleta.findMany({
+        where: {    
+          userId,
+          ativo,
+        },
+        include: {
+          user:true
+        }
+      });
+      reply.send({ pesquisas });
+
+    });
+
+  
+    fastify.post('/criarPesquisaGeral/:mes_ano', async (request, reply) => {
+      const params = request.params as { mes_ano: string };
+
+      const mes_ano = params.mes_ano;
+      const ativo = true
+      const finalizado = true
+  
+      const pesquisas = await prisma.pesquisaCompleta.findMany({
+        where: {
+          finalizado,
+          mes_ano,
+          ativo,
+        },
+      });
+  
+      let nome_supermercado = '';
+
+      let carneBovinaTotal = 0;
+      let leiteIntegralTotal = 0;
+      let feijaoCariocaTotal = 0 
+      let arrozParboilizadoTotal = 0 
+      let farinhaMandiocaTotal = 0 
+      let tomateTotal = 0 
+      let paoTotal = 0 
+      let cafePoTotal = 0 
+      let acucarTotal = 0 
+      let bananaTotal = 0 
+      let oleoSojaTotal = 0 
+      let manteigaTotal = 0 
+
+      let contCarneBovina = 0;
+      let contLeiteIntegral = 0;
+      let contFeijaoCarioca = 0
+      let contArrozParboilizado = 0
+      let contFarinhaMandioca = 0
+      let contTomate = 0
+      let contPao = 0
+      let contCafePo = 0
+      let contAcucar = 0
+      let contBanana = 0
+      let contOleoSoja = 0
+      let contManteiga = 0
+
+      for (const pesquisa of pesquisas) {
+        const {
+          carneBovinaChaDentro,
+          carneBovinaChaFora,
+          carneBovinaPatinhoCoxaoMole,
+
+          leiteIntegralValeDourado,
+          leiteIntegralPiracanjuba,
+          leiteIntegralSabugi,
+
+          feijaoCariocaUrbano,
+          feijaoCariocaDuPrato,
+          feijaoCariocaCunhau,
+
+          arrozParboilizadoChines,
+          arrozParboilizadoFortelli,
+          arrozParboilizadoUrbano,
+
+
+          farinhaMandiocaQuentinha,
+          farinhaMandiocaCurimatau,
+          farinhaMandiocaDuPrato,
+
+          tomate,
+
+          pao,
+          
+          cafePoSaoBraz,
+          cafePoSantaClara,
+          cafePoNordestino,
+
+          acucarNectar,
+          acucarPuroMel,
+          
+          bananaPrata,
+          bananaPacovan,
+          
+          oleoSojaSoya,
+          oleoSojaPrimor,
+          
+          manteigaSaborosa,
+          manteigaJucurutu,
+          manteigaTerra,
+          
+
+        } = pesquisa;
+
+        if (carneBovinaChaDentro) {
+            contCarneBovina++;
+            carneBovinaTotal += carneBovinaChaDentro;
+        }
+
+        if (carneBovinaChaFora) {
+            contCarneBovina++;
+            carneBovinaTotal += carneBovinaChaFora;
+        }
+
+        if (carneBovinaPatinhoCoxaoMole) {
+            contCarneBovina++;
+            carneBovinaTotal += carneBovinaPatinhoCoxaoMole;
+        }
+
+        if (leiteIntegralValeDourado) {
+          contLeiteIntegral++;
+          leiteIntegralTotal += leiteIntegralValeDourado;
+        }
+
+        if (leiteIntegralPiracanjuba) {
+            contLeiteIntegral++;
+            leiteIntegralTotal += leiteIntegralPiracanjuba;
+        }
+
+        if (leiteIntegralSabugi) {
+            contLeiteIntegral++;
+            leiteIntegralTotal += leiteIntegralSabugi;
+        }
+
+        if (feijaoCariocaUrbano) {
+          contFeijaoCarioca++;
+          feijaoCariocaTotal += feijaoCariocaUrbano;
+        }
+
+        if (feijaoCariocaDuPrato) {
+            contFeijaoCarioca++;
+            feijaoCariocaTotal += feijaoCariocaDuPrato;
+        }
+
+        if (feijaoCariocaCunhau) {
+            contFeijaoCarioca++;
+            feijaoCariocaTotal += feijaoCariocaCunhau;
+        }
+
+        if (arrozParboilizadoChines) {
+          contArrozParboilizado++;
+          arrozParboilizadoTotal += arrozParboilizadoChines;
+        }
+
+        if (arrozParboilizadoFortelli) {
+            contArrozParboilizado++;
+            arrozParboilizadoTotal += arrozParboilizadoFortelli;
+        }
+
+        if (arrozParboilizadoUrbano) {
+            contArrozParboilizado++;
+            arrozParboilizadoTotal += arrozParboilizadoUrbano;
+        }
+
+        if (farinhaMandiocaQuentinha) {
+          contFarinhaMandioca++;
+          farinhaMandiocaTotal += farinhaMandiocaQuentinha;
+        }
+
+        if (farinhaMandiocaCurimatau) {
+            contFarinhaMandioca++;
+            farinhaMandiocaTotal += farinhaMandiocaCurimatau;
+        }
+
+        if (farinhaMandiocaDuPrato) {
+          contFarinhaMandioca++;
+          farinhaMandiocaTotal += farinhaMandiocaDuPrato;
+        }
+  
+        if (farinhaMandiocaDuPrato) {
+          contFarinhaMandioca++;
+          farinhaMandiocaTotal += farinhaMandiocaDuPrato;
+        }
+          
+        if (tomate) {
+          contTomate++;
+          tomateTotal += tomate;
+        }   
+        
+        if (pao) {
+          contPao++;
+          paoTotal += pao;
+        }
+
+
+        if (cafePoSaoBraz) {
+          contCafePo++;
+          cafePoTotal += cafePoSaoBraz;
+        }
+
+        if (cafePoSantaClara) {
+          contCafePo++;
+          cafePoTotal += cafePoSantaClara;
+        }
+
+        if (cafePoNordestino) {
+          contCafePo++;
+          cafePoTotal += cafePoNordestino;
+        }
+        
+        if (acucarNectar) {
+          contAcucar++;
+          acucarTotal += acucarNectar;
+        }
+
+        if (acucarPuroMel) {
+          contAcucar++;
+          acucarTotal += acucarPuroMel;
+        }
+                
+        if (bananaPrata) {
+          contBanana++;
+          bananaTotal += bananaPrata;
+        }
+
+        if (bananaPacovan) {
+          contBanana++;
+          bananaTotal += bananaPacovan;
+        }
+                        
+        if (oleoSojaSoya) {
+          contOleoSoja++;
+          oleoSojaTotal += oleoSojaSoya;
+        }
+
+        if (oleoSojaPrimor) {
+          contOleoSoja++;
+          oleoSojaTotal += oleoSojaPrimor;
+        }
+        
+        if (manteigaSaborosa) {
+          contManteiga++;
+          manteigaTotal += manteigaSaborosa;
+        }
+                        
+        if (manteigaJucurutu) {
+          contManteiga++;
+          manteigaTotal += manteigaJucurutu;
+        }
+
+        if (manteigaTerra) {
+          contManteiga++;
+          manteigaTotal += manteigaTerra;
+        }
+        
+        nome_supermercado = pesquisa.nome_supermercado;
+      }
+  
+      const calcularMedia = (total:number, contagem:number) => {
+          if (contagem > 0) {
+              return parseFloat((total / contagem).toFixed(2)) * 100;
+          }
+          return 0;
+      };
+
+      const carneBovinaMedia = calcularMedia(carneBovinaTotal, contCarneBovina);
+      const leiteIntegralMedia = calcularMedia(leiteIntegralTotal, contLeiteIntegral);
+      const feijaoCariocaMedia = calcularMedia(feijaoCariocaTotal, contFeijaoCarioca);
+      const arrozParboilizadoMedia = calcularMedia(arrozParboilizadoTotal, contArrozParboilizado);
+      const farinhaMandiocaMedia = calcularMedia(farinhaMandiocaTotal, contFarinhaMandioca);
+      const tomateMedia = calcularMedia(tomateTotal, contTomate);
+      const paoMedia = calcularMedia(paoTotal, contPao);
+      const cafePoMedia = calcularMedia(cafePoTotal, contCafePo);
+      const acucarMedia = calcularMedia(acucarTotal, contAcucar);
+      const bananaMedia = calcularMedia(bananaTotal, contBanana);
+      const oleoSojaMedia = calcularMedia(oleoSojaTotal, contOleoSoja);
+      const manteigaMedia = calcularMedia(manteigaTotal, contManteiga);
       
-        // Use o Prisma para encontrar todas as PesquisaCompleta com o mes_ano especificado
-        const pesquisas = await prisma.pesquisaCompleta.findMany({
-          where: {
-            mes_ano: mes_ano,
-          },
-        });
-        
-        // mes_ano String
-        // createdAt DateTime @default(now())
-        let nome_supermercado = '';
-        let carneBovinaTotal = 0;
-        let leiteIntegral = 0 
-        let feijaoCarioca = 0 
-        let arrozParboilizado = 0 
-        let farinhaMandioca = 0 
-        let tomate = 0 
-        let pao = 0 
-        let cafePo = 0 
-        let acucar = 0 
-        let banana = 0 
-        let oleoSoja = 0 
-        let manteiga = 0 
-        
-        let contCarneBovina = 0;
-        let contLeiteIntegral = 0
-        let contFeijaoCarioca = 0
-        let contArrozParboilizado = 0
-        let contFarinhaMandioca = 0
-        let contTomate = 0
-        let contPao = 0
-        let contCafePo = 0
-        let contAcucar = 0
-        let contBanana = 0
-        let contOleoSoja = 0
-        let contManteiga = 0
+      const pesquisaIds = pesquisas.map((pesquisa) => pesquisa.id);
 
-        // pesquisas PesquisaCompleta[]
-
-        for (const pesquisa of pesquisas) {
-            // Verifica se o valor de carneBovinaChaDentro é válido e maior que zero
-            if (pesquisa.carneBovinaChaDentro !== null && pesquisa.carneBovinaChaDentro > 0) {
-              contCarneBovina++;
-              carneBovinaTotal += pesquisa.carneBovinaChaDentro;
-            }
-        
-            // Verifica se o valor de carneBovinaChaFora é válido e maior que zero
-            if (pesquisa.carneBovinaChaFora !== null && pesquisa.carneBovinaChaFora > 0) {
-              contCarneBovina++;
-              carneBovinaTotal += pesquisa.carneBovinaChaFora;
-            }
-        
-            // Outras verificações e operações necessárias...
-        
-            const id = pesquisa.id;
-            nome_supermercado = pesquisa.nome_supermercado;
-        
-            console.log(`ID: ${id}, Nome do Supermercado: ${nome_supermercado}`);
-          }
-        
-        // Calcula a média da carneBovina se houver valores válidos
-        
-        let carneBovinaMedia = 0;
-        let carneBovinaFormatada = 0;
-        if (contCarneBovina > 0) {
-            carneBovinaMedia = carneBovinaTotal / contCarneBovina;
-            carneBovinaFormatada = parseFloat(carneBovinaMedia.toFixed(2));
-            carneBovinaMedia = carneBovinaFormatada * 100
-            
-          }
-        
-          console.log(`Média de Carne Bovina: ${carneBovinaMedia}`);
-        
-          // Cria uma nova entrada no banco de dados
-          await prisma.pesquisaGeral.create({
-            data: {
+      await prisma.pesquisaGeral.create({
+          data: {
               mes_ano,
               nome_supermercado,
               carneBovina: carneBovinaMedia,
-            },
-          });
-        reply.send({ pesquisas });
+              leiteIntegral: leiteIntegralMedia,
+              feijaoCarioca: feijaoCariocaMedia,
+              arrozParboilizado: arrozParboilizadoMedia,
+              farinhaMandioca: farinhaMandiocaMedia,
+              tomate: tomateMedia,
+              pao: paoMedia,
+              cafePo: cafePoMedia,
+              acucar: acucarMedia,
+              banana: bananaMedia,
+              oleoSoja: oleoSojaMedia,
+              manteiga: manteigaMedia,
+              pesquisas: {
+                connect: pesquisaIds.map((id) => ({ id })),
+              },
+          },
       });
+  
+      reply.send({ pesquisas });
+    });
+  
+    fastify.put('/removerPesquisaGeral/:id', async (request, reply) => {
+      const params = request.params as { id: string };
+      const id = params.id;
+      try {
+        // Use o Prisma para atualizar o atributo 'ativo' para false
+        const updatedPesquisaGeral = await prisma.pesquisaGeral.update({
+          where: { id },
+          data: { ativo: false },
+        });
+    
+        reply.send({ message: 'Pesquisa Geral atualizada com sucesso.', updatedPesquisaGeral });
+      } catch (error) {
+        reply.code(500).send({ message: 'Erro ao atualizar Pesquisa Geral.', error });
+      }
+    });
+  
+    fastify.put('/removerPesquisaCompleta/:id', async (request, reply) => {
+        const params = request.params as { id: string };
+        const id = params.id;
+        try {
+          // Use o Prisma para atualizar o atributo 'ativo' para false
+          const updatedPesquisaCompleta = await prisma.pesquisaCompleta.update({
+            where: { id },
+            data: { ativo: false },
+          });
+      
+          reply.send({ message: 'Pesquisa Completa atualizada com sucesso.', updatedPesquisaCompleta });
+        } catch (error) {
+          reply.code(500).send({ message: 'Erro ao atualizar Pesquisa Geral.', error });
+        }
+    });
+    fastify.put('/editarPesquisaCompleta/:id', async (request, reply) => {
+      const params = request.params as { id: string };
+      const id = params.id;
+      
+      const editarPesquisaBody = z.object({
+        mes_ano:z.string().optional(),
+        nome_supermercado: z.string().optional(),
+        carneBovinaChaDentro: z.number().optional(),
+        carneBovinaChaFora: z.number().optional(),
+        carneBovinaPatinhoCoxaoMole: z.number().optional(),
+        carneBovina: z.number().optional(),
+        leiteIntegralValeDourado: z.number().optional(),
+        leiteIntegralPiracanjuba: z.number().optional(),
+        leiteIntegralSabugi: z.number().optional(),
+        leiteIntegral: z.number().optional(),
+        feijaoCariocaUrbano: z.number().optional(),
+        feijaoCariocaDuPrato: z.number().optional(),
+        feijaoCariocaCunhau: z.number().optional(),
+        feijaoCarioca: z.number().optional(),
+        arrozParboilizadoChines: z.number().optional(),
+        arrozParboilizadoFortelli: z.number().optional(),
+        arrozParboilizadoUrbano: z.number().optional(),
+        arrozParboilizado: z.number().optional(),
+        farinhaMandiocaQuentinha: z.number().optional(),
+        farinhaMandiocaCurimatau: z.number().optional(),
+        farinhaMandiocaDuPrato: z.number().optional(),
+        
+        farinhaMandioca: z.number().optional(),
+        tomate: z.number().optional(),
+        pao: z.number().optional(),
+        cafePoSaoBraz: z.number().optional(),
+        cafePoSantaClara: z.number().optional(),
+        cafePoNordestino: z.number().optional(),
+        cafePo: z.number().optional(),
+        acucarNectar: z.number().optional(),
+        acucarPuroMel: z.number().optional(),
+        acucar: z.number().optional(),
+        bananaPrata: z.number().optional(),
+        bananaPacovan: z.number().optional(),
+        banana: z.number().optional(),
+        oleoSojaSoya: z.number().optional(),
+        oleoSojaPrimor: z.number().optional(),
+        oleoSoja: z.number().optional(),
+        manteigaSaborosa: z.number().optional(),
+        manteigaJucurutu: z.number().optional(),
+        manteigaTerra: z.number().optional(),
+        manteiga: z.number().optional(),
+        
+      })
+      
+      const { mes_ano, nome_supermercado, carneBovinaChaDentro, carneBovinaChaFora, carneBovinaPatinhoCoxaoMole, carneBovina, leiteIntegralValeDourado, leiteIntegralPiracanjuba, leiteIntegralSabugi, leiteIntegral, feijaoCariocaUrbano, feijaoCariocaDuPrato, feijaoCariocaCunhau, feijaoCarioca, arrozParboilizadoChines, arrozParboilizadoFortelli, arrozParboilizadoUrbano, arrozParboilizado, farinhaMandiocaQuentinha, farinhaMandiocaCurimatau, farinhaMandiocaDuPrato, farinhaMandioca, tomate, pao, cafePoSaoBraz, cafePoSantaClara, cafePoNordestino, cafePo, acucarNectar, acucarPuroMel, acucar, bananaPrata, bananaPacovan, banana, oleoSojaSoya, oleoSojaPrimor, oleoSoja, manteigaSaborosa, manteigaJucurutu, manteigaTerra, manteiga } = editarPesquisaBody.parse(request.body)
+      try {
+        // Use o Prisma para atualizar o atributo 'ativo' para false
+        const updatedPesquisaCompleta = await prisma.pesquisaCompleta.update({
+          where: { id },
+          data: { 
+            mes_ano:mes_ano,
+            nome_supermercado:nome_supermercado,
+            carneBovinaChaDentro:carneBovinaChaDentro,
+            carneBovinaChaFora:carneBovinaChaFora,
+            carneBovinaPatinhoCoxaoMole:carneBovinaPatinhoCoxaoMole,
+            carneBovina:carneBovina,
+            leiteIntegralValeDourado:leiteIntegralValeDourado,
+            leiteIntegralPiracanjuba:leiteIntegralPiracanjuba,
+            leiteIntegralSabugi:leiteIntegralSabugi,
+            leiteIntegral:leiteIntegral,
+            feijaoCariocaUrbano:feijaoCariocaUrbano,
+            feijaoCariocaDuPrato:feijaoCariocaDuPrato,
+            feijaoCariocaCunhau:feijaoCariocaCunhau,
+            feijaoCarioca:feijaoCarioca,
+            arrozParboilizadoChines:arrozParboilizadoChines,
+            arrozParboilizadoFortelli:arrozParboilizadoFortelli,
+            arrozParboilizadoUrbano:arrozParboilizadoUrbano,
+            arrozParboilizado:arrozParboilizado,
+            farinhaMandiocaQuentinha:farinhaMandiocaQuentinha,
+            farinhaMandiocaCurimatau:farinhaMandiocaCurimatau,
+            farinhaMandiocaDuPrato:farinhaMandiocaDuPrato,
+            farinhaMandioca:farinhaMandioca,
+            tomate:tomate,
+            pao:pao,
+            cafePoSaoBraz:cafePoSaoBraz,
+            cafePoSantaClara:cafePoSantaClara,
+            cafePoNordestino:cafePoNordestino,
+            cafePo:cafePo,
+            acucarNectar:acucarNectar,
+            acucarPuroMel:acucarPuroMel,
+            acucar:acucar,
+            bananaPrata:bananaPrata,
+            bananaPacovan:bananaPacovan,
+            banana:banana,
+            oleoSojaSoya:oleoSojaSoya,
+            oleoSojaPrimor:oleoSojaPrimor,
+            oleoSoja:oleoSoja,
+            manteigaSaborosa:manteigaSaborosa,
+            manteigaJucurutu:manteigaJucurutu,
+            manteigaTerra:manteigaTerra,
+            manteiga:manteiga, 
+          },
+        });
+    
+        reply.send({ message: 'Pesquisa Completa atualizada com sucesso.', updatedPesquisaCompleta });
+      } catch (error) {
+        reply.code(500).send({ message: 'Erro ao atualizar Pesquisa Geral.', error });
+      }
 
-    fastify.post('/CriarPesquisaCompleta', async (request, reply) => {
+    return reply.status(201).send({nome_supermercado})
+
+
+
+    });
+    fastify.post('/criarPesquisaCompleta', async (request, reply) => {
         const createPesquisaBody = z.object({
-            mes_ano:z.string(),
+            mes_ano: z.string(),
             nome_supermercado: z.string(),
+            finalizado:z.boolean().optional(),
             carneBovinaChaDentro: z.number().optional(),
             carneBovinaChaFora: z.number().optional(),
             carneBovinaPatinhoCoxaoMole: z.number().optional(),
@@ -127,6 +556,7 @@ export async function pesquisaRoute(fastify:FastifyInstance) {
             farinhaMandiocaQuentinha: z.number().optional(),
             farinhaMandiocaCurimatau: z.number().optional(),
             farinhaMandiocaDuPrato: z.number().optional(),
+            
             farinhaMandioca: z.number().optional(),
             tomate: z.number().optional(),
             pao: z.number().optional(),
@@ -150,7 +580,7 @@ export async function pesquisaRoute(fastify:FastifyInstance) {
              
         })
     
-        const { mes_ano, nome_supermercado, carneBovinaChaDentro, carneBovinaChaFora, carneBovinaPatinhoCoxaoMole, carneBovina, leiteIntegralValeDourado, leiteIntegralPiracanjuba, leiteIntegralSabugi, leiteIntegral, feijaoCariocaUrbano, feijaoCariocaDuPrato, feijaoCariocaCunhau, feijaoCarioca, arrozParboilizadoChines, arrozParboilizadoFortelli, arrozParboilizadoUrbano, arrozParboilizado, farinhaMandiocaQuentinha, farinhaMandiocaCurimatau, farinhaMandiocaDuPrato, farinhaMandioca, tomate, pao, cafePoSaoBraz, cafePoSantaClara, cafePoNordestino, cafePo, acucarNectar, acucarPuroMel, acucar, bananaPrata, bananaPacovan, banana, oleoSojaSoya, oleoSojaPrimor, oleoSoja, manteigaSaborosa, manteigaJucurutu, manteigaTerra, manteiga } = createPesquisaBody.parse(request.body)
+        const { mes_ano, nome_supermercado, finalizado, carneBovinaChaDentro, carneBovinaChaFora, carneBovinaPatinhoCoxaoMole, carneBovina, leiteIntegralValeDourado, leiteIntegralPiracanjuba, leiteIntegralSabugi, leiteIntegral, feijaoCariocaUrbano, feijaoCariocaDuPrato, feijaoCariocaCunhau, feijaoCarioca, arrozParboilizadoChines, arrozParboilizadoFortelli, arrozParboilizadoUrbano, arrozParboilizado, farinhaMandiocaQuentinha, farinhaMandiocaCurimatau, farinhaMandiocaDuPrato, farinhaMandioca, tomate, pao, cafePoSaoBraz, cafePoSantaClara, cafePoNordestino, cafePo, acucarNectar, acucarPuroMel, acucar, bananaPrata, bananaPacovan, banana, oleoSojaSoya, oleoSojaPrimor, oleoSoja, manteigaSaborosa, manteigaJucurutu, manteigaTerra, manteiga } = createPesquisaBody.parse(request.body)
         try {
             await request.jwtVerify()
 
@@ -158,6 +588,7 @@ export async function pesquisaRoute(fastify:FastifyInstance) {
                 data: {
                     mes_ano,
                     nome_supermercado,
+                    finalizado,
                     carneBovinaChaDentro,
                     carneBovinaChaFora,
                     carneBovinaPatinhoCoxaoMole,
@@ -253,8 +684,7 @@ export async function pesquisaRoute(fastify:FastifyInstance) {
                     manteigaSaborosa,
                     manteigaJucurutu,
                     manteigaTerra,
-                    manteiga,
-                    
+                    manteiga, 
                 }
             })
         }
