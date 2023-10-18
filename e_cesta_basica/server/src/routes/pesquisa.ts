@@ -1,6 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import { prisma } from '../lib/prisma'
 import { z } from 'zod'
+import { authenticate } from '../plugins/authenticate';
 
 export async function pesquisaRoute(fastify:FastifyInstance) {
     fastify.get('/listarPesquisasGeral', async (request, reply) => {
@@ -81,22 +82,25 @@ export async function pesquisaRoute(fastify:FastifyInstance) {
 
     });
   
-    fastify.get('/listarPesquisasCompletaAtivoUserId/:userId', async (request, reply) => {
-      const params = request.params as { userId: string };
+  fastify.get('/listarPesquisasCompletaAtivoUser', {
+    onRequest: [authenticate]
+    }, async (request) => {
+      // const params = request.params as { userId: string };
       const ativo = true
-      const userId = params.userId;
-  
+      // const userId = params.userId;
+      
       const pesquisas = await prisma.pesquisaCompleta.findMany({
         where: {    
-          userId,
           ativo,
+          user: {
+            id: request.user.sub,
+          },
         },
         include: {
           user:true
         }
       });
-      reply.send({ pesquisas });
-
+    return {pesquisas}
     });
 
   
@@ -533,7 +537,7 @@ export async function pesquisaRoute(fastify:FastifyInstance) {
 
     });
     fastify.post('/criarPesquisaCompleta', async (request, reply) => {
-        const createPesquisaBody = z.object({
+      const createPesquisaBody = z.object({
             mes_ano: z.string(),
             nome_supermercado: z.string(),
             finalizado:z.boolean().optional(),

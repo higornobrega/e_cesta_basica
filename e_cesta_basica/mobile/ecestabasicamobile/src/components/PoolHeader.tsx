@@ -1,6 +1,6 @@
 import { Heading, HStack, Text, VStack } from 'native-base';
 
-import { PoolCardPros } from './PoolCard';
+import { PoolCardPros } from './PesquisaCard';
 import { Participants } from './Participants';
 
 interface Props {
