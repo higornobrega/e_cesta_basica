@@ -6,6 +6,7 @@ import { Platform } from 'react-native';
 import { New } from '../screens/New';
 import { Pesquisas } from '../screens/Pesquisas';
 import { Find } from '../screens/Find';
+import { Details } from '../screens/Details';
 // import { Signin } from '../screens/Signin';
 
 const { Navigator, Screen } = createBottomTabNavigator();
@@ -59,11 +60,11 @@ export function AppRoutes() {
         options={{ tabBarButton: () => null }}
       />
 
-      {/* <Screen 
+      <Screen 
         name="details"
         component={Details}
         options={{ tabBarButton: () => null }}
-      /> */}
+      />
     </Navigator>
   )
 }

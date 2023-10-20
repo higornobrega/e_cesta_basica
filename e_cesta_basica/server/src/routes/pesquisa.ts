@@ -585,13 +585,15 @@ export async function pesquisaRoute(fastify:FastifyInstance) {
         })
     
         const { mes_ano, nome_supermercado, finalizado, carneBovinaChaDentro, carneBovinaChaFora, carneBovinaPatinhoCoxaoMole, carneBovina, leiteIntegralValeDourado, leiteIntegralPiracanjuba, leiteIntegralSabugi, leiteIntegral, feijaoCariocaUrbano, feijaoCariocaDuPrato, feijaoCariocaCunhau, feijaoCarioca, arrozParboilizadoChines, arrozParboilizadoFortelli, arrozParboilizadoUrbano, arrozParboilizado, farinhaMandiocaQuentinha, farinhaMandiocaCurimatau, farinhaMandiocaDuPrato, farinhaMandioca, tomate, pao, cafePoSaoBraz, cafePoSantaClara, cafePoNordestino, cafePo, acucarNectar, acucarPuroMel, acucar, bananaPrata, bananaPacovan, banana, oleoSojaSoya, oleoSojaPrimor, oleoSoja, manteigaSaborosa, manteigaJucurutu, manteigaTerra, manteiga } = createPesquisaBody.parse(request.body)
-        try {
+        const nomeSupermercadoMaiusculas = nome_supermercado.toUpperCase();
+  
+      try {
             await request.jwtVerify()
 
             await prisma.pesquisaCompleta.create({
                 data: {
                     mes_ano,
-                    nome_supermercado,
+                    nome_supermercado: nomeSupermercadoMaiusculas,
                     finalizado,
                     carneBovinaChaDentro,
                     carneBovinaChaFora,
@@ -649,7 +651,7 @@ export async function pesquisaRoute(fastify:FastifyInstance) {
             await prisma.pesquisaCompleta.create({
                 data: {
                     mes_ano,
-                    nome_supermercado,
+                    nome_supermercado: nomeSupermercadoMaiusculas,
                     carneBovinaChaDentro,
                     carneBovinaChaFora,
                     carneBovinaPatinhoCoxaoMole,
