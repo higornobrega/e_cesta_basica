@@ -488,73 +488,52 @@ export function New() {
             const cpn = cafePoNordestino.replace('R$ ', '')
             const cpnReplaceVirgulaPonto = cpn.replace(',', '.')
             const cpnNumber = Math.round(Number(cpnReplaceVirgulaPonto) * 100)
-            const cpnInt = parseInt(cpnNumber.toString())  
+            const cpnInt = parseInt(cpnNumber.toString())
 
             const an = acucarNectar.replace('R$ ', '')
             const anReplaceVirgulaPonto = an.replace(',', '.')
             const anNumber = Math.round(Number(anReplaceVirgulaPonto) * 100)
-            const anInt = parseInt(anNumber.toString())   
+            const anInt = parseInt(anNumber.toString())
 
             const apm = acucarPuroMel.replace('R$ ', '')
             const apmReplaceVirgulaPonto = apm.replace(',', '.')
             const apmNumber = Math.round(Number(apmReplaceVirgulaPonto) * 100)
-            const apmInt = parseInt(apmNumber.toString())  
-            
+            const apmInt = parseInt(apmNumber.toString())
+
             const bp = bananaPrata.replace('R$ ', '')
             const bpReplaceVirgulaPonto = bp.replace(',', '.')
             const bpNumber = Math.round(Number(bpReplaceVirgulaPonto) * 100)
-            const bpInt = parseInt(bpNumber.toString())  
-            
+            const bpInt = parseInt(bpNumber.toString())
+
             const bpac = bananaPacovan.replace('R$ ', '')
             const bpacReplaceVirgulaPonto = bpac.replace(',', '.')
             const bpacNumber = Math.round(Number(bpacReplaceVirgulaPonto) * 100)
-            const bpacInt = parseInt(bpacNumber.toString())  
-            
+            const bpacInt = parseInt(bpacNumber.toString())
+
             const oss = oleoSojaSoya.replace('R$ ', '')
             const ossReplaceVirgulaPonto = oss.replace(',', '.')
             const ossNumber = Math.round(Number(ossReplaceVirgulaPonto) * 100)
-            const ossInt = parseInt(ossNumber.toString())  
-            
+            const ossInt = parseInt(ossNumber.toString())
+
             const osp = oleoSojaPrimor.replace('R$ ', '')
             const ospReplaceVirgulaPonto = osp.replace(',', '.')
             const ospNumber = Math.round(Number(ospReplaceVirgulaPonto) * 100)
-            const ospInt = parseInt(ospNumber.toString())  
-            
+            const ospInt = parseInt(ospNumber.toString())
+
             const ms = manteigaSaborosa.replace('R$ ', '')
             const msReplaceVirgulaPonto = ms.replace(',', '.')
             const msNumber = Math.round(Number(msReplaceVirgulaPonto) * 100)
-            const msInt = parseInt(msNumber.toString())  
-            
+            const msInt = parseInt(msNumber.toString())
+
             const mj = manteigaJucurutu.replace('R$ ', '')
             const mjReplaceVirgulaPonto = mj.replace(',', '.')
             const mjNumber = Math.round(Number(mjReplaceVirgulaPonto) * 100)
-            const mjInt = parseInt(mjNumber.toString())  
-            
+            const mjInt = parseInt(mjNumber.toString())
+
             const mt = manteigaTerra.replace('R$ ', '')
             const mtReplaceVirgulaPonto = mt.replace(',', '.')
             const mtNumber = Math.round(Number(mtReplaceVirgulaPonto) * 100);
-            const mtInt = parseInt(mtNumber.toString()) 
-            
-            console.log('manteigaJucurutu')
-            console.log(manteigaJucurutu)
-            console.log('mj')
-            console.log(mj)
-            console.log('mjReplaceVirgulaPonto')
-            console.log(mjReplaceVirgulaPonto)
-            console.log('mjNumber')
-            console.log(mjNumber)
-            console.log('mjInt')
-            console.log(mjInt)
-            console.log('manteigaTerra')
-            console.log(manteigaTerra)
-            console.log('mt')
-            console.log(mt)
-            console.log('mtReplaceVirgulaPonto')
-            console.log(mtReplaceVirgulaPonto)
-            console.log('mtNumber')
-            console.log(mtNumber)
-            console.log('mtInt')
-            console.log(mtInt)
+            const mtInt = parseInt(mtNumber.toString())
 
             await api.post('/criarPesquisaCompleta', {
                 mes_ano,
@@ -571,15 +550,15 @@ export function New() {
                 arrozParboilizadoChines: apcInt,
                 arrozParboilizadoFortelli: apfInt,
                 arrozParboilizadoUrbano: apuInt,
-                farinhaMandiocaQuentinha:fmqInt,
-                farinhaMandiocaCurimatau:fmcInt,
-                farinhaMandiocaDuPrato:fmdpInt,
-                pao:pInt,
+                farinhaMandiocaQuentinha: fmqInt,
+                farinhaMandiocaCurimatau: fmcInt,
+                farinhaMandiocaDuPrato: fmdpInt,
+                pao: pInt,
                 tomate: tInt,
-                cafePoSaoBraz:cpsbInt,
-                cafePoSantaClara:cpscInt,
+                cafePoSaoBraz: cpsbInt,
+                cafePoSantaClara: cpscInt,
                 cafePoNordestino: cpnInt,
-                acucarNectar:anInt,
+                acucarNectar: anInt,
                 acucarPuroMel: apmInt,
                 bananaPrata: bpInt,
                 bananaPacovan: bpacInt,
@@ -590,7 +569,7 @@ export function New() {
                 manteigaTerra: mtInt,
             });
             toast.show({
-                title: "Nome do supermercado cadastrado com sucesso",
+                title: "Supermercado editado com sucesso",
                 placement: "top",
                 bgColor: "green.500",
             })
@@ -1027,7 +1006,7 @@ export function New() {
                             <Text style={styles.placeholder}>TOMATE</Text>
                         )}
                     </View>
-                    
+
                     <Heading fontFamily="heading" color="white" fontSize="sm" my={3} textAlign="center">
                         CAFÉ EM PÓ SÃO BRAZ
                     </Heading>
@@ -1172,7 +1151,7 @@ export function New() {
                         )}
                     </View>
 
-                    
+
                     <Heading fontFamily="heading" color="white" fontSize="sm" my={3} textAlign="center">
                         BANANA PACOVAN
                     </Heading>
@@ -1196,7 +1175,7 @@ export function New() {
                             <Text style={styles.placeholder}>BANANA PACOVAN</Text>
                         )}
                     </View>
-                                        
+
                     <Heading fontFamily="heading" color="white" fontSize="sm" my={3} textAlign="center">
                         ÓLEO DE SOJA SOYA
                     </Heading>
@@ -1220,7 +1199,7 @@ export function New() {
                             <Text style={styles.placeholder}>ÓLEO DE SOJA SOYA</Text>
                         )}
                     </View>
-                                                            
+
                     <Heading fontFamily="heading" color="white" fontSize="sm" my={3} textAlign="center">
                         ÓLEO DE SOJA PRIMOR
                     </Heading>
@@ -1244,7 +1223,7 @@ export function New() {
                             <Text style={styles.placeholder}>ÓLEO DE SOJA PRIMOR</Text>
                         )}
                     </View>
-                                                                                
+
                     <Heading fontFamily="heading" color="white" fontSize="sm" my={3} textAlign="center">
                         MANTEIGA SABOROSA
                     </Heading>
@@ -1268,7 +1247,7 @@ export function New() {
                             <Text style={styles.placeholder}>MANTEIGA SABOROSA</Text>
                         )}
                     </View>
-                                                                                                    
+
                     <Heading fontFamily="heading" color="white" fontSize="sm" my={3} textAlign="center">
                         MANTEIGA JUCURUTU
                     </Heading>
@@ -1292,7 +1271,7 @@ export function New() {
                             <Text style={styles.placeholder}>MANTEIGA JUCURUTU</Text>
                         )}
                     </View>
-                                                                                                                        
+
                     <Heading fontFamily="heading" color="white" fontSize="sm" my={3} textAlign="center">
                         MANTEIGA DA TERRA
                     </Heading>
@@ -1318,7 +1297,7 @@ export function New() {
                     </View>
                     <Button
                         my={3}
-                        title="Criar pesquisa"
+                        title="CRIAR PESQUISA"
                         onPress={handlePoolCreate}
                         isLoading={isLoading}
                     />
