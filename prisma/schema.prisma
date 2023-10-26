@@ -10,10 +10,25 @@ generator client {
 // }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
+model User{
+  id String @id @default(cuid())
+  name String
+  ativo Boolean @default(true)
+  email String @unique
+  googleId String? @unique
+  matricula String?
+  avatarUrl String?
+  autorizacao_pesquisa Boolean @default(false)
+  tipo String @default("Aluno")
+  // createdAt DateTime @default(now())
+  // pesquisaIdU String?
+  // pesquisa Pesquisa? @relation(fields: [pesquisaIdU], references: [id])
+  pesquisaComp PesquisaCompleta[]
+}
 
 model Supermercado{
   id String @id @default(cuid())
@@ -136,18 +151,3 @@ model Produto{
 
 
 
-model User{
-  id String @id @default(cuid())
-  name String
-  ativo Boolean @default(true)
-  email String @unique
-  googleId String? @unique
-  matricula String?
-  avatarUrl String?
-  autorizacao_pesquisa Boolean @default(false)
-  tipo String @default("Aluno")
-  // createdAt DateTime @default(now())
-  // pesquisaIdU String?
-  // pesquisa Pesquisa? @relation(fields: [pesquisaIdU], references: [id])
-  pesquisaComp PesquisaCompleta[]
-}

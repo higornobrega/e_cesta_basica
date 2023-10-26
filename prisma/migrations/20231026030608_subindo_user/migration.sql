@@ -1,4 +1,17 @@
 -- CreateTable
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "name" TEXT NOT NULL,
+    "ativo" BOOLEAN NOT NULL DEFAULT true,
+    "email" TEXT NOT NULL,
+    "googleId" TEXT,
+    "matricula" TEXT,
+    "avatarUrl" TEXT,
+    "autorizacao_pesquisa" BOOLEAN NOT NULL DEFAULT false,
+    "tipo" TEXT NOT NULL DEFAULT 'Aluno'
+);
+
+-- CreateTable
 CREATE TABLE "Supermercado" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "name" TEXT NOT NULL,
@@ -91,19 +104,6 @@ CREATE TABLE "Produto" (
     "preco" INTEGER NOT NULL,
     "PesProdPr" TEXT,
     CONSTRAINT "Produto_PesProdPr_fkey" FOREIGN KEY ("PesProdPr") REFERENCES "PesProd" ("id") ON DELETE SET NULL ON UPDATE CASCADE
-);
-
--- CreateTable
-CREATE TABLE "User" (
-    "id" TEXT NOT NULL PRIMARY KEY,
-    "name" TEXT NOT NULL,
-    "ativo" BOOLEAN NOT NULL DEFAULT true,
-    "email" TEXT NOT NULL,
-    "googleId" TEXT,
-    "matricula" TEXT,
-    "avatarUrl" TEXT,
-    "autorizacao_pesquisa" BOOLEAN NOT NULL DEFAULT false,
-    "tipo" TEXT NOT NULL DEFAULT 'Aluno'
 );
 
 -- CreateIndex
