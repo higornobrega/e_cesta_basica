@@ -2,17 +2,7 @@
 CREATE TABLE "Supermercado" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "name" TEXT NOT NULL,
-    "pesquisaIdS" TEXT,
-    CONSTRAINT "Supermercado_pesquisaIdS_fkey" FOREIGN KEY ("pesquisaIdS") REFERENCES "Pesquisa" ("id") ON DELETE SET NULL ON UPDATE CASCADE
-);
-
--- CreateTable
-CREATE TABLE "Pesquisa" (
-    "id" TEXT NOT NULL PRIMARY KEY,
-    "mes_ano" TEXT NOT NULL,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "PesProdIdPes" TEXT,
-    CONSTRAINT "Pesquisa_PesProdIdPes_fkey" FOREIGN KEY ("PesProdIdPes") REFERENCES "PesProd" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+    "pesquisaIdS" TEXT
 );
 
 -- CreateTable
@@ -113,13 +103,10 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "googleId" TEXT,
     "matricula" TEXT,
-    "matricula2" TEXT,
     "avatarUrl" TEXT,
     "autorizacao_pesquisa" BOOLEAN NOT NULL DEFAULT false,
     "tipo" TEXT NOT NULL DEFAULT 'Aluno',
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "pesquisaIdU" TEXT,
-    CONSTRAINT "User_pesquisaIdU_fkey" FOREIGN KEY ("pesquisaIdU") REFERENCES "Pesquisa" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- CreateIndex

@@ -18,17 +18,17 @@ model Supermercado{
   id String @id @default(cuid())
   name String
   pesquisaIdS String?
-  pesquisa Pesquisa? @relation(fields: [pesquisaIdS], references: [id])
+  // pesquisa Pesquisa? @relation(fields: [pesquisaIdS], references: [id])
 }
-model Pesquisa{
-  id String @id @default(cuid())
-  mes_ano String
-  createdAt DateTime @default(now())
-  PesProdIdPes String?
-  supermercado Supermercado[]
-  user User[]
-  pesprod PesProd? @relation(fields: [PesProdIdPes], references: [id]) 
-}
+// model Pesquisa{
+//   id String @id @default(cuid())
+//   mes_ano String
+//   createdAt DateTime @default(now())
+//   PesProdIdPes String?
+//   supermercado Supermercado[]
+//   user User[]
+//   pesprod PesProd? @relation(fields: [PesProdIdPes], references: [id]) 
+// }
 
 model PesquisaGeral{
   id String @id @default(cuid())
@@ -121,7 +121,7 @@ model PesquisaCompleta{
 model PesProd{
   id String @id @default(cuid())
   produtos Produto[]
-  pesquisa Pesquisa[]
+  // pesquisa Pesquisa[]
 }
 model Produto{
   id String @id @default(cuid())
@@ -146,7 +146,7 @@ model User{
   autorizacao_pesquisa Boolean @default(false)
   tipo String @default("Aluno")
   createdAt DateTime @default(now())
-  pesquisaIdU String?
-  pesquisa Pesquisa? @relation(fields: [pesquisaIdU], references: [id])
+  // pesquisaIdU String?
+  // pesquisa Pesquisa? @relation(fields: [pesquisaIdU], references: [id])
   pesquisaComp PesquisaCompleta[]
 }
