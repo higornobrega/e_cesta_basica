@@ -10,7 +10,6 @@ CREATE TABLE "PesquisaGeral" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "mes_ano" TEXT NOT NULL,
     "ativo" BOOLEAN NOT NULL DEFAULT true,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "nome_supermercado" TEXT NOT NULL,
     "carneBovina" INTEGER,
     "leiteIntegral" INTEGER,
@@ -32,7 +31,6 @@ CREATE TABLE "PesquisaCompleta" (
     "ativo" BOOLEAN NOT NULL DEFAULT true,
     "mes_ano" TEXT NOT NULL,
     "finalizado" BOOLEAN NOT NULL DEFAULT false,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "nome_supermercado" TEXT NOT NULL,
     "carneBovinaChaDentro" INTEGER,
     "carneBovinaChaFora" INTEGER,
@@ -105,8 +103,7 @@ CREATE TABLE "User" (
     "matricula" TEXT,
     "avatarUrl" TEXT,
     "autorizacao_pesquisa" BOOLEAN NOT NULL DEFAULT false,
-    "tipo" TEXT NOT NULL DEFAULT 'Aluno',
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    "tipo" TEXT NOT NULL DEFAULT 'Aluno'
 );
 
 -- CreateIndex

@@ -10,7 +10,7 @@ generator client {
 // }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -34,7 +34,7 @@ model PesquisaGeral{
   id String @id @default(cuid())
   mes_ano String
   ativo Boolean @default(true)
-  createdAt DateTime @default(now())
+  // createdAt DateTime @default(now())
   nome_supermercado String
   carneBovina Int?
   leiteIntegral Int?
@@ -57,7 +57,7 @@ model PesquisaCompleta{
   ativo Boolean @default(true)
   mes_ano String
   finalizado Boolean @default(false)
-  createdAt DateTime @default(now())
+  // createdAt DateTime @default(now())
   nome_supermercado String
   carneBovinaChaDentro Int?
   carneBovinaChaFora Int?
@@ -145,7 +145,7 @@ model User{
   avatarUrl String?
   autorizacao_pesquisa Boolean @default(false)
   tipo String @default("Aluno")
-  createdAt DateTime @default(now())
+  // createdAt DateTime @default(now())
   // pesquisaIdU String?
   // pesquisa Pesquisa? @relation(fields: [pesquisaIdU], references: [id])
   pesquisaComp PesquisaCompleta[]
