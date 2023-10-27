@@ -2,7 +2,7 @@
   "expo": {
     "name": "ecestabasicamobile",
     "slug": "ecestabasicamobile",
-    "scheme":"ecestabasicamobile",
+    "scheme": "ecestabasicamobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -19,16 +19,23 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.higornobrega.ecestabasica"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.higornobrega.ecestabasica"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3029cae2-4e36-4d0f-b959-388d31f7340e"
+      }
     }
   }
 }
