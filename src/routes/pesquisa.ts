@@ -119,7 +119,6 @@ export async function pesquisaRoute(fastify: FastifyInstance) {
     });
 
     let nome_supermercado = "";
-    let nome_pesquisador = "";
 
     let carneBovinaTotal = 0;
     let leiteIntegralTotal = 0;
@@ -342,7 +341,6 @@ export async function pesquisaRoute(fastify: FastifyInstance) {
       }
 
       nome_supermercado = pesquisa.nome_supermercado;
-      nome_pesquisador = pesquisa.nome_pesquisador;
     }
 
     const calcularMedia = (total: number, contagem: number) => {
@@ -383,7 +381,6 @@ export async function pesquisaRoute(fastify: FastifyInstance) {
       data: {
         mes_ano,
         nome_supermercado,
-        nome_pesquisador,
         carneBovina: carneBovinaMedia,
         leiteIntegral: leiteIntegralMedia,
         feijaoCarioca: feijaoCariocaMedia,
