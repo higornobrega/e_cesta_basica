@@ -3,7 +3,7 @@
     "name": "ecestabasicamobile",
     "slug": "ecestabasicamobile",
     "scheme": "ecestabasicamobile",
-    "version": "1.0.0",
+    "version": "5.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -34,7 +34,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "3029cae2-4e36-4d0f-b959-388d31f7340e"
+        "projectId": "e888dc11-ecbe-4e6c-8084-291d379dc34b"
       }
     }
   }
